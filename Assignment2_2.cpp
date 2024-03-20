@@ -24,10 +24,14 @@ public:
     }
     void printOnConsole()
     {
-        cout << "total number of car passed tollbooth:\n"
-             << noCar << endl;
-        cout << "total Amount Collected:\n"
-             << totalAmt << endl;
+        //   10 car ,7P*0.5=3.5 ,3N
+        // 10 7P*0.5,/0.53N 
+
+        cout << "total number of car passed tollbooth:\n"<< noCar << endl;
+        cout << "total number of not paying car passed tollbooth:\n"<< ((noCar*0.5)-(totalAmt))/0.5<< endl;
+        cout << "total number of not paying car passed tollbooth:\n"<< noCar-(((noCar*0.5)-(totalAmt))/0.5)<< endl;
+
+        cout << "total Amount Collected:\n"<< totalAmt << endl;
     }
 };
 int main()
