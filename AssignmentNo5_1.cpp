@@ -46,10 +46,11 @@ public:
     Person():Person("ABCD","XYZ"){}
     void acceptPerson()
     {
+        getchar();
         cout << "Enter Name Person :" << endl;
-        cin>>name;
+        getline(cin,name);
         cout << "Enter Address : " << endl;
-        cin>>address;
+        getline(cin,address);
         DFB.acceptDate();
     }
     void displayPerson()
