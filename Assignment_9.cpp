@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include<vector>
+#include <vector>
 using namespace std;
 enum EAccountType
 {
@@ -16,13 +16,11 @@ public:
     double withdrawAmount;
 
 public:
-
-  InSufficientFundsException() : accno(0),currentBalance(0.0),withdrawAmount(0.0)
+    InSufficientFundsException() : accno(0), currentBalance(0.0), withdrawAmount(0.0)
     {
-        
     }
 
-     InSufficientFundsException(int accno, double currentBalace, double withdrawAmount)
+    InSufficientFundsException(int accno, double currentBalace, double withdrawAmount)
     {
         this->accno = accno;
         this->currentBalance = currentBalance;
@@ -48,7 +46,6 @@ private:
 public:
     Account()
     {
-        
     }
     Account(int accno, EAccountType type, double balance = 0)
     {
@@ -103,16 +100,19 @@ public:
 
         cout << " *********Account Details Display********* " << endl;
         cout << "Account Number : " << accno << endl;
-        if(type==0){
+        if (type == 0)
+        {
             cout << "Account Type : SAVING" << endl;
         }
-        else if(type==1){
+        else if (type == 1)
+        {
             cout << "Account Type : CURRENT" << endl;
         }
-        else if(type==2){
+        else if (type == 2)
+        {
             cout << "Account Type : DMAT" << endl;
         }
-        
+
         cout << " Account Balance : " << balance << endl;
     }
     void deposit(double amount)
@@ -129,7 +129,7 @@ public:
     {
         if (balance >= 0 || balance < amount)
         {
-            throw InSufficientFundsException(accno,balance,amount);
+            throw InSufficientFundsException(accno, balance, amount);
         }
         else
             balance = balance - amount;
@@ -142,7 +142,7 @@ int main()
     int uaccno;
     double amount;
     int index = 0;
-    Account *arr[5];
+    vector<Account *> accountList;
 
     do
     {
@@ -164,20 +164,16 @@ int main()
             cout << " Thank you.." << endl;
             break;
         case 1:
-            if (index < 5)
-            {
-                arr[index] = new Account;
-                arr[index]->accept();
-                index++;
-            }
-            else
-                cout << "Array is full " << endl;
-            break;
+        {
+            Account *aptr=new Account();
+            aptr->Account::accept();
+            accountList.push_back(aptr);
+        }
+        break;
         case 2:
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < accountList.size(); i++)
             {
-
-                arr[i]->display();
+                accountList[i]->display();
             }
             break;
         case 3:
@@ -185,16 +181,16 @@ int main()
 
             cout << "Enter the Account Number " << endl;
             cin >> uaccno;
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < accountList.size(); i++)
             {
-                if (uaccno == arr[i]->getAccno())
+                if (uaccno == accountList[i]->getAccno())
                 {
                     cout << "Enter the Amount you want to deposit" << endl;
                     cin >> amount;
                     cout << "++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
                     try
                     {
-                        arr[uaccno]->deposit(amount);
+                        accountList[i]->deposit(amount);
                         cout << amount << "Credited to Account Number " << uaccno << endl;
                     }
                     catch (InSufficientFundsException e)
@@ -210,22 +206,22 @@ int main()
 
             cout << "Enter the Account Number " << endl;
             cin >> uaccno;
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < accountList.size(); i++)
             {
-                if (uaccno == arr[i]->getAccno())
+                if (uaccno == accountList[i]->getAccno())
                 {
-                    cout << "Enter the Amount you want to deposit" << endl;
+                    cout << "Enter the Amount you want to withdraw" << endl;
                     cin >> amount;
                     cout << "+++++++++++++++++++++++++++++++++++++++++" << endl;
                     try
                     {
-                        arr[uaccno]->withdraw(amount);
+                        accountList[i]->withdraw(amount);
                         cout << "Rs. " << amount << " Debited to Account Number " << uaccno << endl;
                     }
                     catch (InSufficientFundsException e)
                     {
-                    cout<< "your current Balance is : "<< e.currentBalance<< "your enter amount is : "<< e.withdrawAmount<<endl;
-                    cout<<"Insufficient balance OR wrong amount entered!!"<< endl;
+                        cout << "your current Balance is : " << e.currentBalance << "your enter amount is : " << e.withdrawAmount << endl;
+                        cout << "Insufficient balance OR wrong amount entered!!" << endl;
                     }
                 }
             }
